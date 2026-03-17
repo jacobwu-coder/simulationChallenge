@@ -123,7 +123,7 @@ n_heads = sum(1 for f in flips if f == 1.5)
 n_tails = N - n_heads
 ```
 
-In this particular simulation run, the coin landed heads **`{python} n_heads`** times and tails **`{python} n_tails`** times out of 50 flips — almost exactly 50/50. Yet the final account balance is **$`{python} f"{round(final_balance, 0):,.0f}"`**.
+In this particular simulation run, the coin landed heads **`{python} n_heads`** times and tails **`{python} n_tails`** times out of 50 flips — roughly 50/50. Yet the final account balance is **$`{python} f"{round(final_balance, 0):,.0f}"`**.
 
 This is the central paradox of multiplicative games: even a perfectly balanced split of wins and losses leads to a dramatically eroded balance. The math explains why — each tails multiplies the balance by 0.6, and each heads by 1.5. But these two multipliers are not symmetric: $1 × 1.5 × 0.6 = $0.90$, meaning one win and one loss together leave you with only 90 cents on the dollar. Over 50 rounds, this decay compounds relentlessly.
 
@@ -141,7 +141,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.ticker as mticker
 
-np.random.seed(7)
+np.random.seed(100)
 
 N = 50
 W0 = 30_000
@@ -160,7 +160,7 @@ mean_bal   = np.mean(final_balances)
 median_bal = np.median(final_balances)
 p_profit   = np.mean(final_balances > W0)
 
-fig, ax = plt.subplots(figsize=(9, 4.5))
+fig, ax = plt.subplots(figsize=(6, 3.5))
 ax.hist(final_balances, bins=25, color='steelblue', edgecolor='white', alpha=0.85)
 ax.axvline(W0, color='tomato', linestyle='--', linewidth=1.8, label=f'Buy-in ($30,000)')
 ax.axvline(median_bal, color='darkorange', linestyle='-', linewidth=1.8, label=f'Median (${median_bal:,.0f})')
@@ -212,7 +212,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.ticker as mticker
 
-np.random.seed(7)   # same seed for fair comparison
+np.random.seed(100)   # same seed for fair comparison
 
 N = 50
 W0 = 30_000
@@ -249,26 +249,26 @@ mod_mean   = np.mean(mod_balances)
 mod_median = np.median(mod_balances)
 mod_p      = np.mean(mod_balances > W0)
 
-fig, axes = plt.subplots(1, 2, figsize=(12, 5), sharey=False)
+fig, axes = plt.subplots(2, 1, figsize=(6, 6), sharey=False)
 
 for ax, data, title, color in zip(
     axes,
     [orig_balances, mod_balances],
-    ['Original Strategy\n(100% at risk)', 'Modified Strategy\n(25% at risk)'],
+    ['Original Strategy (100% at risk)', 'Modified Strategy (25% at risk)'],
     ['steelblue', 'seagreen']
 ):
     ax.hist(data, bins=25, color=color, edgecolor='white', alpha=0.85)
     ax.axvline(W0, color='tomato', linestyle='--', linewidth=1.8, label='Buy-in ($30,000)')
     ax.axvline(np.median(data), color='darkorange', linestyle='-', linewidth=1.8,
                label=f'Median (${np.median(data):,.0f})')
-    ax.set_xlabel('Final Balance ($)', fontsize=11)
-    ax.set_ylabel('Count', fontsize=11)
-    ax.set_title(title, fontsize=13, fontweight='bold')
+    ax.set_xlabel('Final Balance ($)', fontsize=10)
+    ax.set_ylabel('Count', fontsize=10)
+    ax.set_title(title, fontsize=11, fontweight='bold')
     ax.xaxis.set_major_formatter(mticker.FuncFormatter(lambda x, _: f'${x:,.0f}'))
     ax.legend(fontsize=9)
     ax.grid(axis='y', linestyle='--', alpha=0.4)
 
-fig.suptitle('Comparing Investment Strategies over 50 Years', fontsize=14, fontweight='bold', y=1.01)
+fig.suptitle('Comparing Investment Strategies over 50 Years', fontsize=12, fontweight='bold')
 fig.tight_layout()
 plt.show()
 ```

@@ -143,7 +143,7 @@ Figure&nbsp;1: Generative DAG model for the investment game showing how wealth e
 </div>
 </div>
 </div>
-<p>In this particular simulation run, the coin landed heads <strong>28</strong> times and tails <strong>22</strong> times out of 50 flips — almost exactly 50/50. Yet the final account balance is <strong>$33,651</strong>.</p>
+<p>In this particular simulation run, the coin landed heads <strong>28</strong> times and tails <strong>22</strong> times out of 50 flips — roughly 50/50. Yet the final account balance is <strong>$33,651</strong>.</p>
 <p>This is the central paradox of multiplicative games: even a perfectly balanced split of wins and losses leads to a dramatically eroded balance. The math explains why — each tails multiplies the balance by 0.6, and each heads by 1.5. But these two multipliers are not symmetric: $1 × 1.5 × 0.6 = <span class="math inline">\(0.90\)</span>, meaning one win and one loss together leave you with only 90 cents on the dollar. Over 50 rounds, this decay compounds relentlessly.</p>
 <p>I would <strong>not</strong> be satisfied with this outcome. Despite flipping the coin fairly, the compounding effect of losses has more than wiped out the initial investment. This simulation illustrates why the expected value from Section 1 can be dangerously misleading as a stand-alone decision criterion.</p>
 <hr>
@@ -154,20 +154,20 @@ Figure&nbsp;1: Generative DAG model for the investment game showing how wealth e
 <div class="cell-output cell-output-display">
 <div id="q3-dist-100-py" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="index_files/figure-html/q3-dist-100-py-output-1.png" width="855" height="422" class="figure-img"></p>
+<p><img src="index_files/figure-html/q3-dist-100-py-output-1.png" width="569" height="326" class="figure-img"></p>
 <figcaption>Distribution of final balances across 100 simulations (log scale)</figcaption>
 </figure>
 </div>
 </div>
 </div>
-<p>Across 100 simulations, the results paint a sobering picture. The <strong>mean final balance is $76,943</strong>, while the <strong>median final balance is only $3,769</strong> — well below the $30,000 buy-in. The <strong>probability of ending with more than the initial investment is np.float64(0.24)</strong>, meaning fewer than 1 in 4 players walk away with a profit.</p>
+<p>Across 100 simulations, the results paint a sobering picture. The <strong>mean final balance is $145,232</strong>, while the <strong>median final balance is only $2,154</strong> — well below the $30,000 buy-in. The <strong>probability of ending with more than the initial investment is np.float64(0.25)</strong>, meaning fewer than 1 in 4 players walk away with a profit.</p>
 <p>This divergence between the mean and median is the key insight. A small number of simulations produce enormous balances — driven by lucky streaks of heads — which pull the mean upward. But the <em>typical</em> player, represented by the median, suffers a significant loss. The distribution is heavily right-skewed: most outcomes cluster near zero while a few outliers are spectacularly large.</p>
 <p>These results reveal a fundamental tension: the game has a <strong>positive expected value but a negative typical outcome</strong>. This makes it a poor investment for a single player who only gets one shot at 50 years of play.</p>
 <hr>
 </section>
 <section id="section-4-probability-of-balance-30000-at-age-75" class="level2">
 <h2 class="anchored" data-anchor-id="section-4-probability-of-balance-30000-at-age-75">Section 4: Probability of Balance &gt; $30,000 at Age 75</h2>
-<p>From the 100 simulations, the estimated probability of ending with a balance above $30,000 is <strong>np.float64(0.24)</strong> (approximately np.float64(24.0)%). In other words, about <strong>np.float64(76.0)% of players lose money</strong> over the 50-year game.</p>
+<p>From the 100 simulations, the estimated probability of ending with a balance above $30,000 is <strong>np.float64(0.25)</strong> (approximately np.float64(25.0)%). In other words, about <strong>np.float64(75.0)% of players lose money</strong> over the 50-year game.</p>
 <p>This directly challenges the optimistic conclusion from Section 1. While the expected value after one flip is positive (+5%), the long-run probability of profit is far below 50%. The culprit is the geometric mean: one heads multiplied by one tails gives <span class="math inline">\(1.5 × 0.6 = 0.90\)</span>, a compound rate of <em>negative</em> 10% per pair of flips. Over time, this negative geometric drift overwhelms the occasional lucky streak.</p>
 <p>The recommendation flips: <strong>do not buy in.</strong> The expected value, though positive, is driven by rare, extreme wins. The realistic outcome for any single investor is a slow erosion of capital. With roughly a 3-in-4 chance of losing money over 50 years, the game is not a sound investment.</p>
 <hr>
@@ -178,14 +178,14 @@ Figure&nbsp;1: Generative DAG model for the investment game showing how wealth e
 <div class="cell-output cell-output-display">
 <div id="q5-modified-25pct-py" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="index_files/figure-html/q5-modified-25pct-py-output-1.png" width="1139" height="489" class="figure-img"></p>
+<p><img src="index_files/figure-html/q5-modified-25pct-py-output-1.png" width="563" height="569" class="figure-img"></p>
 <figcaption>Original vs.&nbsp;Modified (25% bet) strategy — distribution of final balances</figcaption>
 </figure>
 </div>
 </div>
 </div>
 <p>Under the modified strategy — where only 25% of the balance is wagered each year — the payoffs per flip become <span class="math inline">\(×1.125\)</span> on heads and <span class="math inline">\(×0.900\)</span> on tails. The results are dramatically different.</p>
-<p>The <strong>modified strategy median is $40,926</strong>, compared to just <strong>$3,769</strong> for the original game. The <strong>probability of profit rises to np.float64(0.68)</strong> under the modified strategy, versus only np.float64(0.24) originally.</p>
+<p>The <strong>modified strategy median is $51,157</strong>, compared to just <strong>$2,154</strong> for the original game. The <strong>probability of profit rises to np.float64(0.67)</strong> under the modified strategy, versus only np.float64(0.25) originally.</p>
 <p>Why does betting less lead to <em>better</em> typical outcomes? The answer lies in the geometric mean. Under the modified strategy, one win and one loss yields <span class="math inline">\(1.125 × 0.900 = 1.0125\)</span> — a <strong>compound gain of 1.25% per pair of flips</strong>, compared to a compound loss of 10% in the original game. By reducing the bet size, we flip the geometric mean from negative to positive.</p>
 <p>The modified strategy does sacrifice some upside: the very largest outcomes in the original game are higher because they compound faster. But for a real investor playing once over 50 years, the modified strategy is vastly superior: it shifts the likely outcome from a near-certain loss to a probable gain.</p>
 <p><strong>Recommendation: adopt the modified 25% strategy.</strong> It offers a much more reliable path to wealth accumulation, even if it forgoes the lottery-ticket-style jackpots of the all-in approach.</p>
